@@ -12,7 +12,7 @@
         "preview": "vite preview",
         "lint": "eslint . --fix",
         "format": "prettier --write src/",
-        "deploy": "vite build && gh-pages -d --dest week1"
+        "deploy": "vite build && gh-pages -d dist --dest week1"
     },
     "dependencies": {
         "vue": "^3.5.18"
