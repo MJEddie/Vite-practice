@@ -1,53 +1,84 @@
-<script setup>
-import HelloWorld from "./components/HelloWorld.vue";
-import TheWelcome from "./components/TheWelcome.vue";
-</script>
-
 <template>
-  <header>
-    <img
-      alt="Vue logo"
-      class="logo"
-      src="./assets/logo.svg"
-      width="125"
-      height="125"
-    />
+  <div>
+    <h2>註冊</h2>
+    <input v-model="emailSignUp" placeholder="Email" />
+    <input v-model="passwordSignUp" placeholder="Password" type="password" />
+    <input v-model="nickname" placeholder="Nickname" type="text" />
+    <button @click="signUp">Sign Up</button>
+    <p>{{ messageSignUp }}</p>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+    <h2>登入</h2>
+    <input v-model="emailSignIn" placeholder="Email" type="email" />
+    <input v-model="passwordSignIn" placeholder="Password" type="password" />
+    <button @click="signIn">Sign In</button>
+    <p>Token: {{ token }}</p>
+
+    <h2>驗證</h2>
+    <input v-model="tokenCheck" placeholder="Token" />
+    <button @click="checkOut">Check Out</button>
+    <p>{{ messageCheckOut }}</p>
+
+    <h2>登出</h2>
+    <input v-model="tokenSignOut" placeholder="Token" />
+    <button @click="signOut">Sign Out</button>
+
+    <hr />
+    <h2>Todo list</h2>
+    <div v-if="token">
+      <input v-model="newTodo" placeholder="New Todo" />
+      <button @click="addTodo">Add Todo</button>
+      <ul>
+        <li v-for="(todo, index) in todos" :key="index">
+          {{ todo.content }} {{ todo.status ? "完成" : "未完成" }} |
+          {{ todoEdit[todo.id] }}
+          <input
+            type="text"
+            placeholder="更新值"
+            @change="updateTodoEdit($event, todo.id)"
+          />
+          <button @click="deleteTodo(todo.id)">Delete</button>
+          <button @click="updateTodo(todo.id)">Update</button>
+          <button @click="toggleStatus(todo.id)">Toggle Status</button>
+        </li>
+      </ul>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
+<script setup>
+import { ref, onMounted } from "vue";
+import axios from "axios";
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+const requestUrl = "https://todolist-api.hexschool.io";
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+// 註冊
+const emailSignUp = ref("");
+const passwordSignUp = ref("");
+const nickname = ref("");
+const messageSignUp = ref("");
+
+const signUp = async () => {
+  try {
+    const res = await axios.post(`${requestUrl}/users/sign_up`, {
+      email: emailSignUp.value,
+      password: passwordSignUp.value,
+      nickname: nickname.value,
+    });
+    messageSignUp.value = "註冊成功. UID: " + res.data.uid;
+  } catch (err) {
+    messageSignUp.value = "註冊失敗:" + err.response.data.message;
   }
+};
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
+// 登入
+const emailSignIn = ref("");
+const passwordSignIn = ref("");
+const token = ref("");
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+// 驗證
+const tokenCheck = ref("");
+const messageCheckOut = ref("");
+
+// 登出
+const tokenSignOut = ref("");
+</script>
