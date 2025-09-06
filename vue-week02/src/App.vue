@@ -22,6 +22,7 @@
     <h2>登出</h2>
     <input v-model="tokenSignOut" placeholder="Token" />
     <button @click="signOut">Sign Out</button>
+    <p>{{ messageSignOut }}</p>
 
     <hr />
     <h2>Todo list</h2>
@@ -116,4 +117,22 @@ const checkOut = async () => {
 
 // 登出
 const tokenSignOut = ref("");
+const messageSignOut = ref("");
+
+const signOut = async () => {
+  try {
+    const res = await axios.post(
+      `${requestUrl}/users/sign_out`,
+      {},
+      {
+        headers: {
+          Authorization: tokenSignOut.value,
+        },
+      }
+    );
+    messageSignOut.value = res.data.message;
+  } catch (err) {
+    messageSignOut.value = "登出錯誤: " + err.response.data.message;
+  }
+};
 </script>
