@@ -95,6 +95,25 @@ const signIn = async () => {
 const tokenCheck = ref("");
 const messageCheckOut = ref("");
 
+const checkOut = async () => {
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  document.cookie = `hexschoolTodo=${
+    tokenCheck.value
+  }; expires=${tomorrow.toUTCString()}`;
+
+  try {
+    const res = await axios.get(`${requestUrl}/users/checkout`, {
+      headers: {
+        Authorization: tokenCheck.value,
+      },
+    });
+    messageCheckOut.value = "驗證成功 UID: " + res.data.uid;
+  } catch (err) {
+    messageCheckOut.value = "驗證失敗: " + err.response.data.message;
+  }
+};
+
 // 登出
 const tokenSignOut = ref("");
 </script>
