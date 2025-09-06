@@ -11,7 +11,8 @@
     <input v-model="emailSignIn" placeholder="Email" type="email" />
     <input v-model="passwordSignIn" placeholder="Password" type="password" />
     <button @click="signIn">Sign In</button>
-    <p>Token: {{ token }}</p>
+    <p>{{ messageSignIn }}</p>
+    <p>{{ token }}</p>
 
     <h2>驗證</h2>
     <input v-model="tokenCheck" placeholder="Token" />
@@ -73,8 +74,23 @@ const signUp = async () => {
 // 登入
 const emailSignIn = ref("");
 const passwordSignIn = ref("");
+const messageSignIn = ref("");
 const token = ref("");
 
+const signIn = async () => {
+  try {
+    const res = await axios.post(`${requestUrl}/users/sign_in`, {
+      email: emailSignIn.value,
+      password: passwordSignIn.value,
+    });
+    messageSignIn.value = "登入成功！";
+    token.value = "";
+    token.value = "Token: " + res.data.token;
+  } catch (err) {
+    messageSignIn.value = "";
+    token.value = "登入失敗: " + err.response.data.message;
+  }
+};
 // 驗證
 const tokenCheck = ref("");
 const messageCheckOut = ref("");
