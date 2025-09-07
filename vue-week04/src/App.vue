@@ -9,12 +9,12 @@
     </div>
 
     <!-- 通知元件 -->
-    <NotificationVue></NotificationVue>
+    <Notification></Notification>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, provide, reactive } from "vue";
 import ProductList from "./components/ProductList.vue";
 import Cart from "./components/Cart.vue";
 import Notification from "./components/Notification.vue";
@@ -78,4 +78,21 @@ const addProduct = (product) => {
 const removeProduct = (product) => {
   carts.value = carts.value.filter((item) => item.id !== product.id);
 };
+
+const notification = reactive({
+  isShow: false,
+  message: "",
+});
+
+const showNotification = (message) => {
+  notification.message = message;
+  notification.isShow = true;
+  setTimeout(() => {
+    notification.isShow = false;
+    notification.message = "";
+  }, 2000);
+};
+
+provide("notification", notification);
+provide("showNotification", showNotification);
 </script>

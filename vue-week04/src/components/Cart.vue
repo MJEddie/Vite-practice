@@ -29,6 +29,7 @@
 </template>
 
 <script setup>
+import { inject } from "vue";
 const props = defineProps({
   carts: {
     type: Array,
@@ -39,5 +40,8 @@ const props = defineProps({
 const emit = defineEmits(["remove-cart"]);
 const handleRemoveCart = (item) => {
   emit("remove-product", item);
+  showNotification(`${item.name} 已從購物車移除`);
 };
+
+const showNotification = inject("showNotification");
 </script>

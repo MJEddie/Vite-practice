@@ -23,6 +23,7 @@
 </template>
 
 <script setup>
+import { defineProps, defineEmits, inject } from "vue";
 const props = defineProps({
   products: {
     type: Array,
@@ -33,5 +34,8 @@ const props = defineProps({
 const emit = defineEmits(["add-product"]);
 const handleAddCart = (product) => {
   emit("add-product", product);
+  showNotification(`${product.name} 已加入購物車`);
 };
+
+const showNotification = inject("showNotification");
 </script>
