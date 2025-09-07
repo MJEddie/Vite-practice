@@ -16,7 +16,12 @@
         </div>
         <div>
           <span class="text-muted">${{ item.quantity * item.price }}</span>
-          <button class="btn btn-sm btn-outline-danger ms-2">移除</button>
+          <button
+            class="btn btn-sm btn-outline-danger ms-2"
+            @click="handleRemoveCart(item)"
+          >
+            移除
+          </button>
         </div>
       </li>
     </ul>
@@ -30,4 +35,9 @@ const props = defineProps({
     required: true,
   },
 });
+
+const emit = defineEmits(["remove-cart"]);
+const handleRemoveCart = (item) => {
+  emit("remove-product", item);
+};
 </script>

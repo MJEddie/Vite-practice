@@ -5,7 +5,7 @@
       <ProductList :products="products" @add-product="addProduct"></ProductList>
 
       <!-- 購物車區 -->
-      <Cart :carts="carts"></Cart>
+      <Cart :carts="carts" @remove-product="removeProduct"></Cart>
     </div>
 
     <!-- 通知元件 -->
@@ -73,5 +73,9 @@ const addProduct = (product) => {
       quantity: 1,
     });
   }
+};
+
+const removeProduct = (product) => {
+  carts.value = carts.value.filter((item) => item.id !== product.id);
 };
 </script>
