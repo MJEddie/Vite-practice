@@ -1,6 +1,6 @@
 <template>
   <div id="signUpPage" class="bg-yellow">
-    <div class="conatiner signUpPage vhContainer">
+    <div class="container signUpPage vhContainer">
       <div class="side">
         <a href="#"
           ><img

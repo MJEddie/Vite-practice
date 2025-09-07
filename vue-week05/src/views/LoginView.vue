@@ -1,6 +1,6 @@
 <template>
   <div id="loginPage" class="bg-yellow">
-    <div class="conatiner loginPage vhContainer">
+    <div class="container loginPage vhContainer">
       <div class="side">
         <a href="#"
           ><img
