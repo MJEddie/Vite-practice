@@ -11,7 +11,7 @@
     </nav>
     <div class="conatiner todoListPage vhContainer">
       <div class="todoList_Content">
-        <TodoForm></TodoForm>
+        <TodoForm @add-todo="addTodo"></TodoForm>
         <TodoList
           v-if="todos.length"
           :todos="todos"
@@ -35,7 +35,7 @@ const todos = ref([
 
 const addTodo = (content) => {
   if (content.trim() !== "") {
-    todo.value.push({
+    todos.value.push({
       id: Date.now(),
       content,
       status: false,
