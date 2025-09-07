@@ -23,29 +23,55 @@
             type="text"
             id="email"
             name="email"
+            v-model="email"
             placeholder="請輸入 email"
             required
           />
-          <span>此欄位不可留空</span>
+          <span v-if="email.value === ''">此欄位不可留空</span>
           <label class="formControls_label" for="pwd">密碼</label>
           <input
             class="formControls_input"
             type="password"
             name="pwd"
             id="pwd"
+            v-model="password"
             placeholder="請輸入密碼"
             required
           />
           <input
             class="formControls_btnSubmit"
             type="button"
-            onclick="javascript:location.href='#todoListPage'"
+            @click="handleLogin"
             value="登入"
           />
-          <a class="formControls_btnLink" href="#signUpPage">註冊帳號</a>
+          <Router-link class="formControls_btnLink" to="/register"
+            >註冊帳號</Router-link
+          >
         </form>
       </div>
     </div>
   </div>
 </template>
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { login } from "@/utils/api.js";
+
+const router = useRouter();
+
+const email = ref("test123@gamil.com");
+const password = ref("");
+
+const handleLogin = async () => {
+  try {
+    const res = await login(email.value, password.value);
+    const { token, exp } = res.data;
+    document.cookie = `vue3-todolist-token=${token}; expires=${exp}`;
+
+    alert("登入成功");
+    router.push("/todolist");
+  } catch (err) {
+    alert(`發生錯誤: ${err.response.data.message}`);
+  }
+};
+</script>

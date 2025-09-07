@@ -36,7 +36,8 @@
         ></TodoItem>
       </ul>
       <div class="todoList_statistics">
-        <p>5 個已完成項目</p>
+        <p v-if="incompleteTodos.length === 0">目前尚無待辦事項</p>
+        <p v-else>{{ incompleteTodos.length }}個待完成項目</p>
       </div>
     </div>
   </div>
@@ -66,4 +67,8 @@ const filterTodos = computed(() => {
       return props.todos;
   }
 });
+
+const incompleteTodos = computed(() =>
+  props.todos.filter((todo) => !todo.status)
+);
 </script>

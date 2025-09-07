@@ -23,6 +23,7 @@
             type="text"
             id="email"
             name="email"
+            v-model="email"
             placeholder="請輸入 email"
             required
           />
@@ -32,6 +33,7 @@
             type="text"
             name="name"
             id="name"
+            v-model="nickname"
             placeholder="請輸入您的暱稱"
           />
           <label class="formControls_label" for="pwd">密碼</label>
@@ -40,6 +42,7 @@
             type="password"
             name="pwd"
             id="pwd"
+            v-model="password"
             placeholder="請輸入密碼"
             required
           />
@@ -49,20 +52,43 @@
             type="password"
             name="pwd"
             id="pwd"
+            v-model="confirmPassword"
             placeholder="請再次輸入密碼"
             required
           />
           <input
             class="formControls_btnSubmit"
             type="button"
-            onclick="javascript:location.href='#todoListPage'"
+            @click="handleRegister"
             value="註冊帳號"
           />
-          <a class="formControls_btnLink" href="#loginPage">登入</a>
+          <router-link class="formControls_btnLink" to="login/"
+            >登入</router-link
+          >
         </form>
       </div>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+import { RouterLink, useRouter } from "vue-router";
+import { register } from "@/utils/api.js";
+const router = useRouter();
+
+const email = ref("test123@gamil.com");
+const nickname = ref("test");
+const password = ref("");
+const confirmPassword = ref("");
+
+const handleRegister = async () => {
+  try {
+    await register(email.value, password.value, nickname.value);
+    alert("註冊成功");
+    router.push("todolist/");
+  } catch (err) {
+    alert(`發生錯誤: ${err.response.data.message}`);
+  }
+};
+</script>
