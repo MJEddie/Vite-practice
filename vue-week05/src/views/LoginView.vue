@@ -59,7 +59,7 @@ import { login } from "@/utils/api.js";
 
 const router = useRouter();
 
-const email = ref("test123@gamil.com");
+const email = ref("");
 const password = ref("");
 
 const handleLogin = async () => {

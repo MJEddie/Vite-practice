@@ -77,16 +77,16 @@ import { RouterLink, useRouter } from "vue-router";
 import { register } from "@/utils/api.js";
 const router = useRouter();
 
-const email = ref("test123@gamil.com");
-const nickname = ref("test");
+const email = ref("");
+const nickname = ref("");
 const password = ref("");
 const confirmPassword = ref("");
 
 const handleRegister = async () => {
   try {
     await register(email.value, password.value, nickname.value);
-    alert("註冊成功");
-    router.push("todolist/");
+    alert("註冊成功，請登入帳號");
+    router.push("login/");
   } catch (err) {
     alert(`發生錯誤: ${err.response.data.message}`);
   }
