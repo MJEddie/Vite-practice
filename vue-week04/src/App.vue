@@ -2,7 +2,7 @@
   <div id="app" class="container py-4">
     <div class="row">
       <!-- 商品列表區 -->
-      <ProductList :products="products"></ProductList>
+      <ProductList :products="products" @add-product="addProduct"></ProductList>
 
       <!-- 購物車區 -->
       <Cart :carts="carts"></Cart>
@@ -62,4 +62,16 @@ const products = ref([
   },
 ]);
 const carts = ref([]);
+
+const addProduct = (product) => {
+  const existProduct = carts.value.find((item) => item.id === product.id);
+  if (existProduct) {
+    existProduct.quantity++;
+  } else {
+    carts.value.push({
+      ...product,
+      quantity: 1,
+    });
+  }
+};
 </script>

@@ -12,16 +12,15 @@
       >
         <div>
           <h6 class="my-0">{{ item.name }}</h6>
-          <small class="text-muted">數量：{{ item.amount }}</small>
+          <small class="text-muted">數量：{{ item.quantity }}</small>
         </div>
         <div>
-          <span class="text-muted">${{ item.amount * item.price }}</span>
+          <span class="text-muted">${{ item.quantity * item.price }}</span>
           <button class="btn btn-sm btn-outline-danger ms-2">移除</button>
         </div>
       </li>
     </ul>
   </div>
-  {{ carts }}
 </template>
 
 <script setup>
